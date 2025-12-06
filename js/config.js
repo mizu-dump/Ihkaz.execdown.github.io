@@ -21,11 +21,11 @@ window.scriptData = [
 
   {
     id: "deltaX",
-    title: "Delta",
+    title: "Delta X",
     url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
     description: "Arceus X by SPDM Team: powerful Roblox executor with advanced features, fast updates, and a clean UI.",
     tags: ["delta", "mlemix", "roblox", "smooth-ui"],
-    image: "https://files.catbox.moe/55tkbq.png",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_3oeFIU0Y_uh1xZYslt2b4qZFi28hKBBxZh9YwEXx7BbAjpaH",
     discord: "https://discord.gg/lugia",
     download: "https://arceusx.com/download",
     vngLink: "https://www.mediafire.com/file/glclfeebbmhzxeq/Roblox_-_VNG_Arceus_X_NEO_1.9.0.apk/file",
@@ -33,7 +33,7 @@ window.scriptData = [
     arch: "64Bit",
     vng: true,
     Version: "v2.700.937",
-    VngVer: "v2.695.956",
+    VngVer: "v2.700.937",
     Status: "Online",
     VngStatus: "Online"
   }
