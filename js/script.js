@@ -203,3 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
   handleImageErrors();
   setTimeout(() => showNotification('Welcome Back Anonymous! 🔥'), 1000);
 });
+
+if ('performance' in window) {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+                console.log(`Page loaded in ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
+            }
+        }, 0);
+    });
+}
