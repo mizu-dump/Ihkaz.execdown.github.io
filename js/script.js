@@ -1,7 +1,7 @@
 // ===================================
 // CARD RENDERING FROM JSON
 // ===================================
-let downloadCounts = {}; // Track clicks per script
+let downloadCounts = JSON.parse(localStorage.getItem('downloadCounts') || '{}'); // Persist counts
 
 function createScriptCard(script) {
   const tagsHtml = (script.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
@@ -24,9 +24,9 @@ function createScriptCard(script) {
   const archInfo = script.arch ? `<span class="arch-label" style="margin-right:5px;">${script.arch}</span>` : "";
   const vngLabel = script.vng ? `<span class="vng-label" style="margin-right:5px;">VNG</span>` : "";
 
-  // Status circles
-  const statusCircle = `<span class="status-circle ${script.Status === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.Status !== 'Online' ? 'offline-text' : ''}">${script.Status || "---"}</span>`;
-  const vngStatusCircle = `<span class="status-circle ${script.VngStatus === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.VngStatus !== 'Online' ? 'offline-text' : ''}">${script.VngStatus || "---"}</span>`;
+  // Status circles with proper text colors
+  const statusCircle = `<span class="status-circle ${script.Status === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.Status === 'Online' ? 'online-text' : 'offline-text'}">${script.Status || "---"}</span>`;
+  const vngStatusCircle = `<span class="status-circle ${script.VngStatus === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.VngStatus === 'Online' ? 'online-text' : 'offline-text'}">${script.VngStatus || "---"}</span>`;
 
   // Initialize download counter
   if (!downloadCounts[script.id]) downloadCounts[script.id] = 0;
@@ -56,11 +56,11 @@ function createScriptCard(script) {
     <p class="card-description">${script.description || ""}</p>
     <div class="card-tags">${tagsHtml}</div>
 
-    <div class="card-platforms" style="margin-bottom:10px;">
+    <div class="card-platforms" style="margin-bottom:15px;">
       ${platformIcons} ${archInfo} ${vngLabel}
     </div>
 
-    <div class="card-status" style="margin-bottom:10px;">
+    <div class="card-status" style="margin-bottom:15px; display:flex; flex-direction:column; gap:5px;">
       <div>Version: ${script.Version || "-"}</div>
       <div>VNG Version: ${script.VngVer || "-"}</div>
       <div>Status: ${statusCircle}</div>
@@ -133,7 +133,6 @@ function initializeAnimations() {
 // EVENT LISTENERS
 // ===================================
 function updateDynamicButtons() {
-  // Discord buttons
   document.querySelectorAll('.discord-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-discord');
@@ -141,27 +140,27 @@ function updateDynamicButtons() {
     });
   });
 
-  // Download buttons
   document.querySelectorAll('.download').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-url');
       const id = btn.getAttribute('data-id');
       if (url && url !== '#') {
         window.open(url, '_blank');
-        downloadCounts[id]++;
+        downloadCounts[id] = (downloadCounts[id] || 0) + 1;
+        localStorage.setItem('downloadCounts', JSON.stringify(downloadCounts));
         document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
       }
     });
   });
 
-  // VNG buttons
   document.querySelectorAll('.vng-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-url');
       const id = btn.getAttribute('data-id');
       if (url && url !== '#') {
         window.open(url, '_blank');
-        downloadCounts[id]++;
+        downloadCounts[id] = (downloadCounts[id] || 0) + 1;
+        localStorage.setItem('downloadCounts', JSON.stringify(downloadCounts));
         document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
       }
     });
@@ -206,19 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => showNotification('Welcome Back Anonymous! 🔥'), 1000);
 });
 
-if ('performance' in window) {
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const perfData = performance.getEntriesByType('navigation')[0];
-      if (perfData) console.log(`Page loaded in ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
-    }, 0);
-  });
-}
-
-/* ===================================
-  CSS (to add in your stylesheet for glowing status)
-=================================== */
-`
+// ===================================
+// CSS (to add in your stylesheet for glowing status)
+// ===================================
 .status-circle {
   display: inline-block;
   width: 12px;
@@ -236,7 +225,7 @@ if ('performance' in window) {
   box-shadow: 0 0 8px #ff0000;
   animation: glow 1s infinite alternate;
 }
-.status-text { color: #00ff00; font-weight: bold; }
-.status-text.offline-text { color: #ff0000; }
+.status-text.online-text { color: #00ff00; font-weight:bold; }
+.status-text.offline-text { color: #ff0000; font-weight:bold; }
 @keyframes glow { 0% {box-shadow:0 0 8px;} 100% {box-shadow:0 0 12px;} }
-`
+*/
