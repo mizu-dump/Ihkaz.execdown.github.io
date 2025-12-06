@@ -204,27 +204,3 @@ document.addEventListener('DOMContentLoaded', () => {
   handleImageErrors();
   setTimeout(() => showNotification('Welcome Back Anonymous! 🔥'), 1000);
 });
-
-// ===================================
-// CSS (to add in your stylesheet for glowing status)
-// ===================================
-.status-circle {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-.status-circle.online {
-  background-color: #00ff00;
-  box-shadow: 0 0 8px #00ff00;
-  animation: glow 1s infinite alternate;
-}
-.status-circle.offline {
-  background-color: #ff0000;
-  box-shadow: 0 0 8px #ff0000;
-  animation: glow 1s infinite alternate;
-}
-.status-text.online-text { color: #00ff00; font-weight:bold; }
-.status-text.offline-text { color: #ff0000; font-weight:bold; }
-@keyframes glow { 0% {box-shadow:0 0 8px;} 100% {box-shadow:0 0 12px;} }
