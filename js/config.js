@@ -17,5 +17,24 @@ window.scriptData = [
     VngVer: "v2.695.956",
     Status: "Online",
     VngStatus: "Offline"
+  },
+
+  {
+    id: "deltaX",
+    title: "Delta",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Arceus X by SPDM Team: powerful Roblox executor with advanced features, fast updates, and a clean UI.",
+    tags: ["delta", "gnom", "roblox", "smooth-ui"],
+    image: "https://files.catbox.moe/55tkbq.png",
+    discord: "https://discord.gg/lugia",
+    download: "https://arceusx.com/download",
+    vngLink: "https://www.mediafire.com/file/glclfeebbmhzxeq/Roblox_-_VNG_Arceus_X_NEO_1.9.0.apk/file",
+    platforms: ["Android", "PC"],
+    arch: "64Bit",
+    vng: true,
+    Version: "v2.700.937",
+    VngVer: "v2.695.956",
+    Status: "Online",
+    VngStatus: "Online"
   }
 ];
