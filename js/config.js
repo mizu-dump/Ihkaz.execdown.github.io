@@ -78,4 +78,24 @@ window.scriptData = [
     Status: "Online",
     VngStatus: "Offline"
   },
+
+  {
+    id: "neutron",
+    title: "Neutron",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Neutron Executor is a Roblox script executor that lets users run custom scripts in Roblox games. It works on multiple platforms including Windows PC, iOS.",
+    category: "COMPATIBLE",
+    tags: ["neutron", "roblox", "customizable"],
+    image: "https://www.neutron-executor.xyz/assets/Neutron-CsHoQbG3.png",
+    discord: "https://discord.gg/37cV3nFpy9",
+    download: "https://www.neutron-executor.xyz/download?platform=android",
+    vngLink: "https://www.neutron-executor.xyz/download?platform=android",
+    platforms: ["Android", "iOS", "PC"],
+    arch: ["64Bit", "32Bit"],
+    vng: true,
+    Version: "v2.700.926",
+    VngVer: "v2.698.937",
+    Status: "Online",
+    VngStatus: "Offline"
+  }
 ];
