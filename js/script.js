@@ -1,16 +1,18 @@
 // ===================================
 // CARD RENDERING FROM JSON
 // ===================================
+let downloadCounts = {}; // Track clicks per script
+
 function createScriptCard(script) {
   const tagsHtml = (script.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
 
-  // card icon by category
+  // Card icon by category
   let icon = "fa-code";
   if (script.category && script.category.toLowerCase().includes("utility")) icon = "fa-earth-americas";
   if (script.category && script.category.toLowerCase().includes("helper")) icon = "fa-tools";
   if (script.category && script.category.toLowerCase().includes("creative")) icon = "fa-palette";
 
-  // platform icons
+  // Platform icons
   const platformIcons = (script.platforms || []).map(p => {
     if (p.toLowerCase() === "pc") return `<i class="fas fa-desktop" title="PC"></i>`;
     if (p.toLowerCase() === "android") return `<i class="fab fa-android" title="Android"></i>`;
@@ -18,9 +20,21 @@ function createScriptCard(script) {
     return "";
   }).join(" ");
 
-  // architecture / global / VNG
+  // Architecture / VNG label
   const archInfo = script.arch ? `<span class="arch-label">${script.arch}</span>` : "";
   const vngLabel = script.vng ? `<span class="vng-label">VNG</span>` : "";
+
+  // Status circles
+  const statusCircle = script.Status === 'Online'
+    ? `<span class="status-circle online"></span> <span class="status-text">${script.Status}</span>`
+    : `<span class="status-circle offline"></span> <span class="status-text offline-text">${script.Status}</span>`;
+
+  const vngStatusCircle = script.VngStatus === 'Online'
+    ? `<span class="status-circle online"></span> <span class="status-text">${script.VngStatus}</span>`
+    : `<span class="status-circle offline"></span> <span class="status-text offline-text">${script.VngStatus}</span>`;
+
+  // Initialize download counter
+  downloadCounts[script.id] = 0;
 
   return `
 <article class="script-card" data-animate="fade-up" data-category="${script.category ? script.category.toLowerCase() : ''}">
@@ -51,34 +65,40 @@ function createScriptCard(script) {
       ${platformIcons} ${archInfo} ${vngLabel}
     </div>
 
+    <div class="card-status">
+      <div>Version: ${script.Version || "-"}</div>
+      <div>VNG Version: ${script.VngVer || "-"}</div>
+      <div>Status: ${statusCircle}</div>
+      <div>VNG Status: ${vngStatusCircle}</div>
+      <div>Downloads: <span id="downloads-${script.id}">0</span></div>
+    </div>
+
     <div class="card-actions">
       <button class="btn-card discord-btn" data-discord="${script.discord || '#'}">
-        <i class="fab fa-discord"></i>
-        <span>Discord</span>
+        <i class="fab fa-discord"></i> Discord
       </button>
-      <button class="btn-card download" data-url="${script.download || '#'}">
-        <i class="fas fa-download"></i>
-        <span>Download</span>
+      <button class="btn-card download" data-url="${script.download || '#'}" data-id="${script.id}">
+        <i class="fas fa-download"></i> Download
       </button>
-      ${script.vng ? `<button class="btn-card vng-btn">VNG</button>` : ""}
+      ${script.vng ? `<button class="btn-card vng-btn" data-url="${script.vngLink || '#'}" data-id="${script.id}">VNG</button>` : ""}
     </div>
   </div>
 </article>
 `;
 }
 
+// ===================================
+// RENDER CARDS
+// ===================================
 function renderScriptCards() {
   const container = document.getElementById('scriptCards');
-  if (!container) {
-    console.error('Script cards container not found!');
-    return;
-  }
+  if (!container) return;
   if (!window.scriptData || !Array.isArray(window.scriptData)) {
-    console.error('Script data not found or invalid!');
-    container.innerHTML = '<p style="text-align: center; color: white;">No scripts available</p>';
+    container.innerHTML = '<p style="text-align:center;color:white;">No scripts available</p>';
     return;
   }
   container.innerHTML = window.scriptData.map(createScriptCard).join('');
+  updateDynamicButtons();
 }
 
 // ===================================
@@ -117,25 +137,6 @@ function initializeAnimations() {
 // ===================================
 // EVENT LISTENERS
 // ===================================
-function initializeEventListeners() {
-  // scroll button
-  document.getElementById('exploreBtn')?.addEventListener('click', () => {
-    document.getElementById('scriptCards')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-  // Update dynamic buttons
-  updateDynamicButtons();
-
-  // mobile menu
-  const menuToggleBtn = document.getElementById('menuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  menuToggleBtn?.addEventListener('click', () => {
-    menuToggleBtn.classList.toggle('active');
-    mobileMenu.classList.toggle('show');
-  });
-}
-
-// Update buttons after rendering
 function updateDynamicButtons() {
   // Discord buttons
   document.querySelectorAll('.discord-btn').forEach(btn => {
@@ -149,14 +150,25 @@ function updateDynamicButtons() {
   document.querySelectorAll('.download').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-url');
-      if (url && url !== '#') window.open(url, '_blank');
+      const id = btn.getAttribute('data-id');
+      if (url && url !== '#') {
+        window.open(url, '_blank');
+        downloadCounts[id]++;
+        document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
+      }
     });
   });
 
-  // VNG buttons (optional, show alert)
+  // VNG buttons
   document.querySelectorAll('.vng-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      showNotification('This executor supports VNG!', 'success');
+      const url = btn.getAttribute('data-url');
+      const id = btn.getAttribute('data-id');
+      if (url && url !== '#') {
+        window.open(url, '_blank');
+        downloadCounts[id]++;
+        document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
+      }
     });
   });
 }
@@ -164,22 +176,17 @@ function updateDynamicButtons() {
 // ===================================
 // NOTIFICATION
 // ===================================
-function showNotification(message, type = 'success') {
-  document.querySelectorAll('.notification').forEach(n => n.remove());
+function showNotification(message, type='success') {
+  document.querySelectorAll('.notification').forEach(n=>n.remove());
   const notification = document.createElement('div');
   notification.className = `notification ${type}`;
-  notification.innerHTML = `
-    <div class="notification-content">
-      <i class="fas ${type === 'success' ? 'fa-check' : 'fa-exclamation-circle'}"></i>
+  notification.innerHTML = `<div class="notification-content">
+      <i class="fas ${type==='success'?'fa-check':'fa-exclamation-circle'}"></i>
       <span>${message}</span>
-    </div>
-  `;
+    </div>`;
   document.body.appendChild(notification);
-  requestAnimationFrame(() => notification.style.transform = 'translateX(0)');
-  setTimeout(() => {
-    notification.style.transform = 'translateX(100%)';
-    setTimeout(() => notification.remove(), 300);
-  }, 3000);
+  requestAnimationFrame(()=>notification.style.transform='translateX(0)');
+  setTimeout(()=>{notification.style.transform='translateX(100%)';setTimeout(()=>notification.remove(),300);},3000);
 }
 
 // ===================================
@@ -198,19 +205,43 @@ function handleImageErrors() {
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
   renderScriptCards();
-  initializeEventListeners();
+  updateDynamicButtons();
   initializeAnimations();
   handleImageErrors();
   setTimeout(() => showNotification('Welcome Back Anonymous! 🔥'), 1000);
 });
 
 if ('performance' in window) {
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            if (perfData) {
-                console.log(`Page loaded in ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
-            }
-        }, 0);
-    });
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const perfData = performance.getEntriesByType('navigation')[0];
+      if (perfData) console.log(`Page loaded in ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
+    }, 0);
+  });
 }
+
+/* ===================================
+  CSS (to add in your stylesheet for glowing status)
+=================================== */
+`
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.status-circle.online {
+  background-color: #00ff00;
+  box-shadow: 0 0 8px #00ff00;
+  animation: glow 1s infinite alternate;
+}
+.status-circle.offline {
+  background-color: #ff0000;
+  box-shadow: 0 0 8px #ff0000;
+  animation: glow 1s infinite alternate;
+}
+.status-text { color: #00ff00; font-weight: bold; }
+.status-text.offline-text { color: #ff0000; }
+@keyframes glow { 0% {box-shadow:0 0 8px;} 100% {box-shadow:0 0 12px;} }
+`
