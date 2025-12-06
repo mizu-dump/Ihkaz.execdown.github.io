@@ -137,5 +137,21 @@ window.scriptData = [
     VngVer: "v2.696.880",
     Status: "Online",
     VngStatus: "Offline"
+  },
+
+  {
+    id: "wrldclient",
+    title: "World Client",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Experience the ultimate freedom in Roblox scripting with our Level 3 executor featuring 83 UNC score and 100% undetected technology. Join 100,000+ users who trust us daily - completely FREE and undetected forever!",
+    category: "Compatible",
+    tags: ["world-client", "roblox", "windows"],
+    image: "https://files.catbox.moe/yg9ptv.png",
+    discord: "https://discord.gg/WMsYZgmCYA",
+    download: "https://www.mediafire.com/file/m6qx2ddc3murw3u/Cryptic.apk/file",
+    platforms: "PC",
+    vng: false,
+    Version: "version-1849ecbff0824113",
+    Status: "Online",
   }
 ];
