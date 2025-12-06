@@ -97,6 +97,77 @@ function renderScriptCards() {
 }
 
 // ===================================
+// REST OF YOUR SCRIPT (original code)
+// ===================================
+
+let currentScript = null;
+
+const elements = {
+    exploreBtn: document.getElementById('exploreBtn'),
+    codeModal: document.getElementById('codeModal'),
+    closeCodeModal: document.getElementById('closeCodeModal'),
+    downloadFromModal: document.getElementById('downloadFromModal'),
+    // these will be updated after dynamic rendering
+    viewCodeBtns: [],
+    downloadBtns: [],
+    statNumbers: document.querySelectorAll('.stat-number')
+};
+
+function smoothScrollTo(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+function showNotification(message, type = 'success') {
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(n => n.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${type === 'success' ? 'fa-check' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    requestAnimationFrame(() => {
+        notification.style.transform = 'translateX(0)';
+    });
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+function downloadFile(url, filename) {
+  fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+          const LINK = document.createElement('a');
+          LINK.href = URL.createObjectURL(blob);
+          LINK.download = filename || "script.lua"
+          document.body.appendChild(LINK);
+          LINK.click();
+          document.body.removeChild(LINK);
+          URL.revokeObjectURL(LINK.href);
+          showNotification('Download started!');
+      })
+      .catch(err => {
+          console.error('Download error:', err);
+          showNotification('Download failed!');
+      });
+          }
+
+// ===================================
 // ANIMATION & TYPING
 // ===================================
 function animateTypingTitles() {
