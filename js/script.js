@@ -12,29 +12,24 @@ function createScriptCard(script) {
   if (script.category && script.category.toLowerCase().includes("helper")) icon = "fa-tools";
   if (script.category && script.category.toLowerCase().includes("creative")) icon = "fa-palette";
 
-  // Platform icons
+  // Platform icons with spacing
   const platformIcons = (script.platforms || []).map(p => {
-    if (p.toLowerCase() === "pc") return `<i class="fas fa-desktop" title="PC"></i>`;
-    if (p.toLowerCase() === "android") return `<i class="fab fa-android" title="Android"></i>`;
-    if (p.toLowerCase() === "ios") return `<i class="fab fa-apple" title="iOS"></i>`;
+    if (p.toLowerCase() === "pc") return `<i class="fas fa-desktop" title="PC" style="margin-right:5px;"></i>`;
+    if (p.toLowerCase() === "android") return `<i class="fab fa-android" title="Android" style="margin-right:5px;"></i>`;
+    if (p.toLowerCase() === "ios") return `<i class="fab fa-apple" title="iOS" style="margin-right:5px;"></i>`;
     return "";
   }).join(" ");
 
-  // Architecture / VNG label
-  const archInfo = script.arch ? `<span class="arch-label">${script.arch}</span>` : "";
-  const vngLabel = script.vng ? `<span class="vng-label">VNG</span>` : "";
+  // Architecture / VNG label with spacing
+  const archInfo = script.arch ? `<span class="arch-label" style="margin-right:5px;">${script.arch}</span>` : "";
+  const vngLabel = script.vng ? `<span class="vng-label" style="margin-right:5px;">VNG</span>` : "";
 
   // Status circles
-  const statusCircle = script.Status === 'Online'
-    ? `<span class="status-circle online"></span> <span class="status-text">${script.Status}</span>`
-    : `<span class="status-circle offline"></span> <span class="status-text offline-text">${script.Status}</span>`;
-
-  const vngStatusCircle = script.VngStatus === 'Online'
-    ? `<span class="status-circle online"></span> <span class="status-text">${script.VngStatus}</span>`
-    : `<span class="status-circle offline"></span> <span class="status-text offline-text">${script.VngStatus}</span>`;
+  const statusCircle = `<span class="status-circle ${script.Status === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.Status !== 'Online' ? 'offline-text' : ''}">${script.Status || "---"}</span>`;
+  const vngStatusCircle = `<span class="status-circle ${script.VngStatus === 'Online' ? 'online' : 'offline'}"></span> <span class="status-text ${script.VngStatus !== 'Online' ? 'offline-text' : ''}">${script.VngStatus || "---"}</span>`;
 
   // Initialize download counter
-  downloadCounts[script.id] = 0;
+  if (!downloadCounts[script.id]) downloadCounts[script.id] = 0;
 
   return `
 <article class="script-card" data-animate="fade-up" data-category="${script.category ? script.category.toLowerCase() : ''}">
@@ -61,26 +56,26 @@ function createScriptCard(script) {
     <p class="card-description">${script.description || ""}</p>
     <div class="card-tags">${tagsHtml}</div>
 
-    <div class="card-platforms">
+    <div class="card-platforms" style="margin-bottom:10px;">
       ${platformIcons} ${archInfo} ${vngLabel}
     </div>
 
-    <div class="card-status">
+    <div class="card-status" style="margin-bottom:10px;">
       <div>Version: ${script.Version || "-"}</div>
       <div>VNG Version: ${script.VngVer || "-"}</div>
       <div>Status: ${statusCircle}</div>
       <div>VNG Status: ${vngStatusCircle}</div>
-      <div>Downloads: <span id="downloads-${script.id}">0</span></div>
+      <div>Downloads: <span id="downloads-${script.id}">${downloadCounts[script.id]}</span></div>
     </div>
 
-    <div class="card-actions">
+    <div class="card-actions" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
       <button class="btn-card discord-btn" data-discord="${script.discord || '#'}">
         <i class="fab fa-discord"></i> Discord
       </button>
       <button class="btn-card download" data-url="${script.download || '#'}" data-id="${script.id}">
         <i class="fas fa-download"></i> Download
       </button>
-      ${script.vng ? `<button class="btn-card vng-btn" data-url="${script.vngLink || '#'}" data-id="${script.id}">VNG</button>` : ""}
+      ${script.vng ? `<button class="btn-card vng-btn" data-url="${script.vngLink || '#'}" data-id="${script.id}"><i class="fas fa-bolt"></i> VNG</button>` : ""}
     </div>
   </div>
 </article>
@@ -186,7 +181,7 @@ function showNotification(message, type='success') {
     </div>`;
   document.body.appendChild(notification);
   requestAnimationFrame(()=>notification.style.transform='translateX(0)');
-  setTimeout(()=>{notification.style.transform='translateX(100%)';setTimeout(()=>notification.remove(),300);},3000);
+  setTimeout(()=>{notification.style.transform='translateX(100%)';setTimeout(()=>notification.remove(),300);},300);
 }
 
 // ===================================
