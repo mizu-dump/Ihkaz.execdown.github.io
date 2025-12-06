@@ -24,7 +24,7 @@ window.scriptData = [
     title: "Delta X",
     url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
     description: "Delta X is a Roblox Executor that customize the Roblox game for free of cost. Delta executor you can execute multiple of scripts easily.",
-    category: "COMPATIBLE",
+    category: "SMOOTH",
     tags: ["delta", "mlemix", "roblox", "compatible"],
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_3oeFIU0Y_uh1xZYslt2b4qZFi28hKBBxZh9YwEXx7BbAjpaH",
     discord: "https://discord.gg/deltax",
@@ -44,6 +44,7 @@ window.scriptData = [
     title: "Codex",
     url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
     description: "Codex stands out as the premier Roblox script executor, providing unparalleled functionality to effortlessly run scripts for your preferred Roblox.",
+    category: "COMPATIBLE",
     tags: ["codex", "roblox", "compatible"],
     image: "https://files.catbox.moe/mmjwwd.png",
     discord: "https://discord.gg/codexlol",
@@ -56,5 +57,25 @@ window.scriptData = [
     VngVer: "v2.689.880",
     Status: "Online",
     VngStatus: "Offline"
-  }
+  },
+
+  {
+    id: "fluxusZ",
+    title: "FluxusZ",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Fluxus Z supports , Unified Naming Convention. A movement for universal script compatibility.",
+    category: "COMPATIBLE",
+    tags: ["fluxusZ", "jake", "roblox", "compatible"],
+    image: "https://files.catbox.moe/qt87ws.webp",
+    discord: "https://discord.gg/fluxusz",
+    download: "https://fluxusz.com/download",
+    vngLink: "https://fluxusz.com/download",
+    platforms: ["Android", "iOS", "PC"],
+    arch: ["64Bit", "32Bit"],
+    vng: true,
+    Version: "v2.700.926",
+    VngVer: "v2.697.880",
+    Status: "Online",
+    VngStatus: "Offline"
+  },
 ];
