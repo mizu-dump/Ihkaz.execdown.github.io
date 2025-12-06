@@ -97,5 +97,25 @@ window.scriptData = [
     VngVer: "v2.698.937",
     Status: "Online",
     VngStatus: "Offline"
+  },
+
+  {
+    id: "krnl",
+    title: "Krnl",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Krnl has been discontinued and will not return. Roblox detect krnl user use downgraded version of roblox will get instant ban.",
+    category: "DISCONTINUED",
+    tags: ["krnl", "roblox-killed-krnl", "smooth-ui"],
+    image: "https://cdn.wearedevs.net/images/thumbnails/krnl.jpeg",
+    discord: "https://discord.gg/getkrnl",
+    download: "https://krnl.filenetwork.vip/file/krnl_release_2.697.926_2025.11.2_53.apk",
+    vngLink: "https://krnl.filenetwork.vip/file/krnl_vng_release_2.696.799_2025.11.1_31.apk",
+    platforms: ["Android", "iOS", "PC"],
+    arch: ["64Bit", "32Bit"],
+    vng: true,
+    Version: "v2.697.926",
+    VngVer: "v2.696.799",
+    Status: "Offline",
+    VngStatus: "Offline"
   }
 ];
