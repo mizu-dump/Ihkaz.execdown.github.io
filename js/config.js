@@ -27,7 +27,7 @@ window.scriptData = [
     tags: ["delta", "mlemix", "roblox", "smooth-ui"],
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_3oeFIU0Y_uh1xZYslt2b4qZFi28hKBBxZh9YwEXx7BbAjpaH",
     discord: "https://discord.gg/lugia",
-    download: "https://arceusx.com/download",
+    download: "https://delta.filenetwork.vip/file/Delta-2.700.937-p1.apk",
     vngLink: "https://www.mediafire.com/file/glclfeebbmhzxeq/Roblox_-_VNG_Arceus_X_NEO_1.9.0.apk/file",
     platforms: ["Android", "iOS"],
     arch: "64Bit",
