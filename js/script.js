@@ -269,7 +269,7 @@ async function openCodeModal(scriptId) {
     }
     currentScript = script;
     elements.codeModal.classList.add('active');
-    elements.codeContent.textContent = 'Loading script...';
+    elements.codeContent.textContent = 'Loading executor...';
     try {
         const response = await fetch(script.url);
         if (!response.ok) {
@@ -416,10 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
     handleImageErrors();
     
     setTimeout(() => {
-        showNotification('Welcome to Script Vault! 🚀');
+        showNotification('Welcome Back Anonymous! 🔥');
     }, 1000);
     
-    console.log('Script Vault initialized successfully');
+    console.log('Executor Vault initialized successfully');
 });
 
 if ('performance' in window) {
