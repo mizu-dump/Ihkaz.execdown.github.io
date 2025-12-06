@@ -228,4 +228,3 @@ document.addEventListener('DOMContentLoaded', () => {
 .status-text.online-text { color: #00ff00; font-weight:bold; }
 .status-text.offline-text { color: #ff0000; font-weight:bold; }
 @keyframes glow { 0% {box-shadow:0 0 8px;} 100% {box-shadow:0 0 12px;} }
-*/
