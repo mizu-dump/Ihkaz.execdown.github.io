@@ -117,5 +117,25 @@ window.scriptData = [
     VngVer: "v2.696.799",
     Status: "Offline",
     VngStatus: "Offline"
+  },
+
+  {
+    id: "cryptic",
+    title: "Cryptic",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Experience seamless gameplay with Cryptic's 100% UNC Android, IOS & PC Executors. Secure, reliable, and optimized for maximum performance.",
+    category: "Compatible",
+    tags: ["cryptic", "roblox", "compatible"],
+    image: "https://getcryptic.net/assets/moonzglowz-HcoSKqMr.png",
+    discord: "https://discord.gg/getcryptic",
+    download: "https://www.mediafire.com/file/m6qx2ddc3murw3u/Cryptic.apk/file",
+    vngLink: "https://www.mediafire.com/file/pf4k4kacl46v02b/Cryptic+2.689.880+VNG.apk/file",
+    platforms: ["Android", "PC"],
+    arch: "64Bit",
+    vng: true,
+    Version: "v2.700.937",
+    VngVer: "v2.696.880",
+    Status: "Online",
+    VngStatus: "Offline"
   }
 ];
