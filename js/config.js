@@ -9,7 +9,7 @@ window.scriptData = [
     image: "https://files.catbox.moe/55tkbq.png",
     discord: "https://discord.gg/lugia",
     download: "https://arceusx.com/download",
-    vngLink: "https://arceusx.com/vng", // VNG button URL
+    vngLink: "https://www.mediafire.com/file/glclfeebbmhzxeq/Roblox_-_VNG_Arceus_X_NEO_1.9.0.apk/file",
     platforms: ["Android", "PC"],
     arch: "64Bit",
     vng: true,
