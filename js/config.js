@@ -24,6 +24,7 @@ window.scriptData = [
     title: "Delta X",
     url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
     description: "Delta X is a Roblox Executor that customize the Roblox game for free of cost. Delta executor you can execute multiple of scripts easily.",
+    category: "COMPATIBLE",
     tags: ["delta", "mlemix", "roblox", "compatible"],
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_3oeFIU0Y_uh1xZYslt2b4qZFi28hKBBxZh9YwEXx7BbAjpaH",
     discord: "https://discord.gg/deltax",
@@ -36,5 +37,24 @@ window.scriptData = [
     VngVer: "v2.700.937",
     Status: "Online",
     VngStatus: "Online"
+  },
+
+  {
+    id: "codeX",
+    title: "Codex",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Codex stands out as the premier Roblox script executor, providing unparalleled functionality to effortlessly run scripts for your preferred Roblox.",
+    tags: ["codex", "roblox", "compatible"],
+    image: "https://files.catbox.moe/mmjwwd.png",
+    discord: "https://discord.gg/codexlol",
+    download: "https://www.mediafire.com/file/xrq7h1tmzcf5p4z/Codex+V2.700.937.apk/file",
+    vngLink: "https://www.mediafire.com/file/3piv87u6044r554/Codex_v2.689_VNG.apk/file",
+    platforms: ["Android", "iOS"],
+    arch: "64Bit",
+    vng: true,
+    Version: "v2.700.937",
+    VngVer: "v2.689.880",
+    Status: "Online",
+    VngStatus: "Offline"
   }
 ];
