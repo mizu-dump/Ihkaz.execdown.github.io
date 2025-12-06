@@ -150,8 +150,11 @@ window.scriptData = [
     discord: "https://discord.gg/WMsYZgmCYA",
     download: "https://www.mediafire.com/file/m6qx2ddc3murw3u/Cryptic.apk/file",
     platforms: "PC",
+    arch: "64Bit",
     vng: false,
     Version: "version-1849ecbff0824113",
+    VngVer: "Defined",
     Status: "Online",
+    VngStatus: "Offline"
   }
 ];
