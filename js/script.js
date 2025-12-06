@@ -72,10 +72,10 @@ function createScriptCard(script) {
       <button class="btn-card discord-btn" data-discord="${script.discord || '#'}">
         <i class="fab fa-discord"></i> Discord
       </button>
-      <button class="btn-card download" data-url="${script.download || '#'}" data-id="${script.id}">
+      <button class="btn-card download" data-id="${script.id}">
         <i class="fas fa-download"></i> Download
       </button>
-      ${script.vng ? `<button class="btn-card vng-btn" data-url="${script.vngLink || '#'}" data-id="${script.id}"><i class="fas fa-bolt"></i> VNG</button>` : ""}
+      ${script.vng ? `<button class="btn-card vng-btn" data-id="${script.id}"><i class="fas fa-bolt"></i> VNG</button>` : ""}
     </div>
   </div>
 </article>
@@ -97,75 +97,76 @@ function renderScriptCards() {
 }
 
 // ===================================
-// REST OF YOUR SCRIPT (original code)
+// PLATFORM POPUP
 // ===================================
+let selectedPlatform = null;
+let currentScriptLinks = null;
 
-let currentScript = null;
+function openPlatformPopup(script) {
+  const popup = document.getElementById("platformPopup");
+  const list = document.getElementById("popupPlatforms");
+  list.innerHTML = "";
+  selectedPlatform = null;
+  currentScriptLinks = {};
 
-const elements = {
-    exploreBtn: document.getElementById('exploreBtn'),
-    codeModal: document.getElementById('codeModal'),
-    closeCodeModal: document.getElementById('closeCodeModal'),
-    downloadFromModal: document.getElementById('downloadFromModal'),
-    // these will be updated after dynamic rendering
-    viewCodeBtns: [],
-    downloadBtns: [],
-    statNumbers: document.querySelectorAll('.stat-number')
-};
+  // Map each supported platform to its download URL
+  (script.platforms || []).forEach(p => {
+    const platformKey = p.toLowerCase();
+    currentScriptLinks[platformKey] = script.downloadLinks?.[platformKey] || script.download || '#';
 
-function smoothScrollTo(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-function showNotification(message, type = 'success') {
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(n => n.remove());
-    
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas ${type === 'success' ? 'fa-check' : 'fa-exclamation-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    requestAnimationFrame(() => {
-        notification.style.transform = 'translateX(0)';
+    const li = document.createElement("li");
+    li.textContent = p;
+    li.addEventListener("click", () => {
+      selectedPlatform = platformKey;
+      [...list.children].forEach(c => c.classList.remove("selected"));
+      li.classList.add("selected");
     });
-    
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    list.appendChild(li);
+  });
+
+  popup.style.display = "flex";
 }
 
-function downloadFile(url, filename) {
-  fetch(url)
-      .then(response => response.blob())
-      .then(blob => {
-          const LINK = document.createElement('a');
-          LINK.href = URL.createObjectURL(blob);
-          LINK.download = filename || "script.lua"
-          document.body.appendChild(LINK);
-          LINK.click();
-          document.body.removeChild(LINK);
-          URL.revokeObjectURL(LINK.href);
-          showNotification('Download started!');
-      })
-      .catch(err => {
-          console.error('Download error:', err);
-          showNotification('Download failed!');
-      });
-          }
+document.getElementById("popupCancelBtn").addEventListener("click", () => {
+  document.getElementById("platformPopup").style.display = "none";
+});
+
+document.getElementById("popupDownloadBtn").addEventListener("click", () => {
+  if (!selectedPlatform) return alert("Please select a platform first!");
+  const url = currentScriptLinks[selectedPlatform];
+  if (url) window.open(url, "_blank");
+  document.getElementById("platformPopup").style.display = "none";
+});
+
+// ===================================
+// DYNAMIC BUTTONS
+// ===================================
+function updateDynamicButtons() {
+  document.querySelectorAll('.discord-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-discord');
+      if (url && url !== '#') window.open(url, '_blank');
+    });
+  });
+
+  document.querySelectorAll('.download, .vng-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const script = (window.scriptData || []).find(s => s.id === id);
+      if (!script) return;
+
+      if (script.platforms && script.platforms.length) {
+        openPlatformPopup(script);
+        downloadCounts[id] = (downloadCounts[id] || 0) + 1;
+        localStorage.setItem('downloadCounts', JSON.stringify(downloadCounts));
+        document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
+      } else {
+        const url = btn.getAttribute('data-url') || script.download;
+        if (url && url !== '#') window.open(url, '_blank');
+      }
+    });
+  });
+}
 
 // ===================================
 // ANIMATION & TYPING
@@ -197,80 +198,26 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
 function animateCounters() {
-    elements.statNumbers.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count')) || 0;
-        const current = parseInt(counter.textContent) || 0;
-        if (current !== target && target > 0) {
-            const increment = Math.max(1, Math.ceil(target / 50));
-            const timer = setInterval(() => {
-                const currentValue = parseInt(counter.textContent) || 0;
-                if (currentValue < target) {
-                    counter.textContent = Math.min(currentValue + increment, target);
-                } else {
-                    counter.textContent = target;
-                    clearInterval(timer);
-                }
-            }, 50);
+  document.querySelectorAll('.stat-number').forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count')) || 0;
+    const current = parseInt(counter.textContent) || 0;
+    if (current !== target && target > 0) {
+      const increment = Math.max(1, Math.ceil(target / 50));
+      const timer = setInterval(() => {
+        const currentValue = parseInt(counter.textContent) || 0;
+        if (currentValue < target) {
+          counter.textContent = Math.min(currentValue + increment, target);
+        } else {
+          counter.textContent = target;
+          clearInterval(timer);
         }
-    });
+      }, 50);
+    }
+  });
 }
 
 function initializeAnimations() {
   document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
-}
-
-// ===================================
-// EVENT LISTENERS
-// ===================================
-function updateDynamicButtons() {
-  document.querySelectorAll('.discord-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.getAttribute('data-discord');
-      if (url && url !== '#') window.open(url, '_blank');
-    });
-  });
-
-  document.querySelectorAll('.download').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.getAttribute('data-url');
-      const id = btn.getAttribute('data-id');
-      if (url && url !== '#') {
-        window.open(url, '_blank');
-        downloadCounts[id] = (downloadCounts[id] || 0) + 1;
-        localStorage.setItem('downloadCounts', JSON.stringify(downloadCounts));
-        document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
-      }
-    });
-  });
-
-  document.querySelectorAll('.vng-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.getAttribute('data-url');
-      const id = btn.getAttribute('data-id');
-      if (url && url !== '#') {
-        window.open(url, '_blank');
-        downloadCounts[id] = (downloadCounts[id] || 0) + 1;
-        localStorage.setItem('downloadCounts', JSON.stringify(downloadCounts));
-        document.getElementById(`downloads-${id}`).textContent = downloadCounts[id];
-      }
-    });
-  });
-}
-
-// ===================================
-// NOTIFICATION
-// ===================================
-function showNotification(message, type='success') {
-  document.querySelectorAll('.notification').forEach(n=>n.remove());
-  const notification = document.createElement('div');
-  notification.className = `notification ${type}`;
-  notification.innerHTML = `<div class="notification-content">
-      <i class="fas ${type==='success'?'fa-check':'fa-exclamation-circle'}"></i>
-      <span>${message}</span>
-    </div>`;
-  document.body.appendChild(notification);
-  requestAnimationFrame(()=>notification.style.transform='translateX(0)');
-  setTimeout(()=>{notification.style.transform='translateX(100%)';setTimeout(()=>notification.remove(),300);},300);
 }
 
 // ===================================
@@ -294,29 +241,3 @@ document.addEventListener('DOMContentLoaded', () => {
   handleImageErrors();
   setTimeout(() => showNotification('Welcome Back Anonymous! 🔥'), 1000);
 });
-
-// ===================================
-// CSS (to add in your stylesheet for glowing status)
-// ===================================
-/*
-.status-circle {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-.status-circle.online {
-  background-color: #00ff00;
-  box-shadow: 0 0 8px #00ff00;
-  animation: glow 1s infinite alternate;
-}
-.status-circle.offline {
-  background-color: #ff0000;
-  box-shadow: 0 0 8px #ff0000;
-  animation: glow 1s infinite alternate;
-}
-.status-text.online-text { color: #00ff00; font-weight:bold; }
-.status-text.offline-text { color: #ff0000; font-weight:bold; }
-@keyframes glow { 0% {box-shadow:0 0 8px;} 100% {box-shadow:0 0 12px;} }
-*/
