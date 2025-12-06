@@ -125,6 +125,25 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
+function animateCounters() {
+    elements.statNumbers.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count')) || 0;
+        const current = parseInt(counter.textContent) || 0;
+        if (current !== target && target > 0) {
+            const increment = Math.max(1, Math.ceil(target / 50));
+            const timer = setInterval(() => {
+                const currentValue = parseInt(counter.textContent) || 0;
+                if (currentValue < target) {
+                    counter.textContent = Math.min(currentValue + increment, target);
+                } else {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 50);
+        }
+    });
+}
+
 function initializeAnimations() {
   document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 }
