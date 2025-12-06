@@ -9,8 +9,13 @@ window.scriptData = [
     image: "https://files.catbox.moe/55tkbq.png",
     discord: "https://discord.gg/lugia",
     download: "https://arceusx.com/download",
+    vngLink: "https://arceusx.com/vng", // VNG button URL
     platforms: ["Android", "PC"],
     arch: "64Bit",
-    vng: true
+    vng: true,
+    Version: "v2.700.937",
+    VngVer: "v2.695.956",
+    Status: "Online",
+    VngStatus: "Offline"
   }
 ];
