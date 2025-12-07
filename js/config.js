@@ -124,7 +124,7 @@ window.scriptData = [
     title: "Cryptic",
     url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
     description: "Experience seamless gameplay with Cryptic's 100% UNC Android, IOS & PC Executors. Secure, reliable, and optimized for maximum performance.",
-    category: "Compatible",
+    category: "COMPATIBLE",
     tags: ["cryptic", "roblox", "compatible"],
     image: "https://getcryptic.net/assets/moonzglowz-HcoSKqMr.png",
     discord: "https://discord.gg/getcryptic",
@@ -135,6 +135,26 @@ window.scriptData = [
     vng: true,
     Version: "v2.700.937",
     VngVer: "v2.696.880",
+    Status: "Online",
+    VngStatus: "Offline"
+  },
+
+  {
+    id: "wrld-clieent",
+    title: "World Client",
+    url: "https://raw.githubusercontent.com/mizu-dump/DumpScript/refs/heads/main/loadser.lua",
+    description: "Experience the ultimate freedom in Roblox scripting with our Level 3 executor featuring 83 UNC score and 100% undetected technology. Join 100,000+ users who trust us daily - completely FREE and undetected forever!",
+    category: "COMPATIBLE",
+    tags: ["world-client", "roblox", "compatible"],
+    image: "https://files.catbox.moe/yg9ptv.png",
+    discord: "https://discord.gg/WMsYZgmCYA",
+    download: "https://useworld.xyz/",
+    vngLink: "https://useworld.xyz/",
+    platforms: ["PC"],
+    arch: "64Bit",
+    vng: true,
+    Version: "version-1849ecbff0824113",
+    VngVer: "version-1849ecbff0824113",
     Status: "Online",
     VngStatus: "Offline"
   }
