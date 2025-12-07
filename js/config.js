@@ -150,11 +150,11 @@ window.scriptData = [
     discord: "https://discord.gg/WMsYZgmCYA",
     download: "https://useworld.xyz/",
     vngLink: "https://useworld.xyz/",
-    platforms: "PC",
+    platforms: ["PC"],
     arch: "64Bit",
     vng: true,
     Version: "version-1849ecbff0824113",
-    VngVer: "Defined",
+    VngVer: "version-1849ecbff0824113",
     Status: "Online",
     VngStatus: "Offline"
   }
