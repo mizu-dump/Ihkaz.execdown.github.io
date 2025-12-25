@@ -252,7 +252,7 @@ window.scriptData = [
     vngLink: "https://useworld.xyz/",
     platforms: ["PC"],
     arch: "64Bit",
-    vng: false,
+    vng: true,
     Version: "version-5b077c093804f4fe6",
     VngVer: "version-1849ecbff0824113",
     Status: "Online",
