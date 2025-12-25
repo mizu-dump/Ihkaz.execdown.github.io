@@ -254,7 +254,7 @@ window.scriptData = [
     arch: "64Bit",
     vng: true,
     Version: "version-5b077c093804f4fe6",
-    VngVer: "version-1849ecbff0824113",
+    VngVer: "version-5b077c093804f4fe6",
     Status: "Online",
     VngStatus: "Offline"
   }
