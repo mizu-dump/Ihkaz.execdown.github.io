@@ -31,7 +31,7 @@ window.scriptData = [
     download: "https://delta.filenetwork.vip/file/Delta-2.700.937-p1.apk",
     vngLink: "https://www.mediafire.com/file/w06xj36ycy63xyt/Delta_Vng_V2.700%2864bit%29_Up2.apk/file",
     platforms: ["Android", "iOS"],
-    arch: "64Bit",
+    arch: ["64Bit", "32Bit"],
     vng: true,
     Version: "v2.700.937",
     VngVer: "v2.700.937",
@@ -76,7 +76,7 @@ window.scriptData = [
     Version: "v2.700.926",
     VngVer: "v2.697.880",
     Status: "Online",
-    VngStatus: "Offline"
+    VngStatus: "Online"
   },
 
   {
